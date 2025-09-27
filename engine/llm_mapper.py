@@ -104,3 +104,64 @@ class LLMISTVONMapper:
                 merged[key] = llm_enhanced[key]
         
         return merged
+    
+    def validate_sanitizability(self, prompt: str) -> Dict[str, Any]:
+        """Use LLM to validate if a prompt can be sanitized"""
+        
+        if not self.model:
+            return {"sanitizable": True, "reason": "LLM not available, assuming sanitizable"}  # Fallback
+        
+        validation_prompt = self._build_validation_prompt(prompt)
+        
+        try:
+            response = self.model.generate_content(validation_prompt)
+            return self._parse_validation_response(response.text)
+        except Exception as e:
+            print(f"LLM validation failed: {e}. Assuming sanitizable.")
+            return {"sanitizable": True, "reason": "LLM validation failed, assuming sanitizable"}
+    
+    def _build_validation_prompt(self, prompt: str) -> str:
+        return f"""
+        You are a content safety validator. Analyze if the following prompt can be sanitized to be safe and appropriate.
+        
+        PROMPT: "{prompt}"
+        
+        TASK: Determine if this prompt can be rewritten/sanitized to be safe and appropriate for general use.
+        
+        CONSIDER:
+        - Can harmful intent be removed while keeping the core request?
+        - Can dangerous actions be replaced with safe alternatives?
+        - Is the underlying request fundamentally harmful or just poorly worded?
+        
+        EXAMPLES:
+        - "I want to blow up an apartment" → NOT SANITIZABLE (fundamentally harmful)
+        - "How to hack a computer" → SANITIZABLE (can be "How to secure a computer")
+        - "Write something violent" → SANITIZABLE (can be "Write something dramatic")
+        
+        Return ONLY a JSON response in this exact format:
+        {{
+            "sanitizable": true/false,
+            "reason": "Brief explanation of why it can/cannot be sanitized"
+        }}
+        
+        Return ONLY the JSON, no explanations or additional text.
+        """
+    
+    def _parse_validation_response(self, response_text: str) -> Dict[str, Any]:
+        """Parse LLM validation response"""
+        try:
+            # Extract JSON from response
+            json_match = re.search(r'\{.*\}', response_text, re.DOTALL)
+            if json_match:
+                json_str = json_match.group()
+                result = json.loads(json_str)
+                # Ensure required fields exist
+                if "sanitizable" not in result:
+                    result["sanitizable"] = True
+                if "reason" not in result:
+                    result["reason"] = "No reason provided"
+                return result
+            else:
+                return {"sanitizable": True, "reason": "Could not parse LLM response"}
+        except json.JSONDecodeError:
+            return {"sanitizable": True, "reason": "Invalid JSON response from LLM"}

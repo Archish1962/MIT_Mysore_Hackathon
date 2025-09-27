@@ -16,6 +16,10 @@ class DatabaseManager:
         conn = sqlite3.connect(self.db_name)
         cursor = conn.cursor()
         
+        # Check if table exists and has new columns
+        cursor.execute("PRAGMA table_info(prompt_transformations)")
+        columns = [column[1] for column in cursor.fetchall()]
+        
         # Main transformations table
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS prompt_transformations (
@@ -26,9 +30,25 @@ class DatabaseManager:
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 domain_category TEXT,
                 prompt_length INTEGER,
-                transformation_time_ms INTEGER
+                transformation_time_ms INTEGER,
+                verdict TEXT,
+                reason TEXT,
+                sanitized_prompt TEXT,
+                response TEXT
             )
         ''')
+        
+        # Add new columns if they don't exist
+        new_columns = [
+            ('verdict', 'TEXT'),
+            ('reason', 'TEXT'),
+            ('sanitized_prompt', 'TEXT'),
+            ('response', 'TEXT')
+        ]
+        
+        for column_name, column_type in new_columns:
+            if column_name not in columns:
+                cursor.execute(f'ALTER TABLE prompt_transformations ADD COLUMN {column_name} {column_type}')
         
         # Analytics view
         cursor.execute('''
@@ -48,22 +68,29 @@ class DatabaseManager:
     
     def log_transformation(self, original_prompt: str, istvon_json: Dict, 
                           success: bool, domain: str = "auto", 
-                          processing_time: int = 0):
+                          processing_time: int = 0, verdict: str = None,
+                          reason: str = None, sanitized_prompt: str = None,
+                          response: str = None):
         """Log a prompt transformation to the database"""
         conn = sqlite3.connect(self.db_name)
         cursor = conn.cursor()
         
         cursor.execute('''
             INSERT INTO prompt_transformations 
-            (original_prompt, istvon_json, success_flag, domain_category, prompt_length, transformation_time_ms)
-            VALUES (?, ?, ?, ?, ?, ?)
+            (original_prompt, istvon_json, success_flag, domain_category, prompt_length, 
+             transformation_time_ms, verdict, reason, sanitized_prompt, response)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             original_prompt, 
             json.dumps(istvon_json), 
             success, 
             domain, 
             len(original_prompt),
-            processing_time
+            processing_time,
+            verdict,
+            reason,
+            sanitized_prompt,
+            response
         ))
         
         conn.commit()
@@ -111,6 +138,33 @@ class DatabaseManager:
                 "prompt": row[0][:100] + "..." if len(row[0]) > 100 else row[0],
                 "timestamp": row[2],
                 "success": bool(row[3])
+            }
+            for row in results
+        ]
+    
+    def get_sanitized_prompts(self, limit: int = 10):
+        """Get recent sanitized prompts for display"""
+        conn = sqlite3.connect(self.db_name)
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT original_prompt, istvon_json, sanitized_prompt, created_at, verdict
+            FROM prompt_transformations 
+            WHERE sanitized_prompt IS NOT NULL AND sanitized_prompt != ''
+            ORDER BY created_at DESC 
+            LIMIT ?
+        ''', (limit,))
+        
+        results = cursor.fetchall()
+        conn.close()
+        
+        return [
+            {
+                "original_prompt": row[0],
+                "istvon_json": json.loads(row[1]) if row[1] else {},
+                "sanitized_prompt": row[2],
+                "timestamp": row[3],
+                "verdict": row[4]
             }
             for row in results
         ]

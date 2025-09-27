@@ -38,48 +38,79 @@ class ISTVONEngine:
             # Step 1: Safety check with broker
             broker_result = self.broker.process_with_broker(prompt)
             
+            # Extract broker decision details
+            verdict = broker_result.get("verdict", "UNKNOWN")
+            reason = broker_result.get("reason", "No reason provided")
+            
             if not broker_result["success"]:
                 # Content was blocked by broker
                 processing_time = int((time.time() - start_time) * 1000)
-                self.db_manager.log_transformation(
-                    prompt, {}, False, 
-                    "blocked", processing_time
-                )
+                # Note: Rule engine decision is already logged to JSON file by broker
                 return {
                     "success": False,
-                    "error": broker_result.get("reason", "Content blocked for safety reasons"),
+                    "error": reason,
                     "processing_time": processing_time,
                     "blocked": True,
+                    "verdict": verdict,
+                    "reason": reason,
                     "recommendations": broker_result.get("analysis", {}).get("recommendations", [])
                 }
             
-            # Step 2: Analyze context
+            # Step 2: LLM Validation - Check if prompt is sanitizable
+            validation_result = self.llm_mapper.validate_sanitizability(prompt)
+            
+            if not validation_result.get("sanitizable", True):
+                # Prompt cannot be sanitized, block it
+                processing_time = int((time.time() - start_time) * 1000)
+                block_reason = f"Blocked due to: {validation_result.get('reason', 'Cannot be sanitized')}"
+                
+                # Log the block decision to JSON file
+                from utils.json_logger import RuleEngineLogger
+                json_logger = RuleEngineLogger()
+                json_logger.log_decision(prompt, "BLOCK", block_reason)
+                
+                return {
+                    "success": False,
+                    "error": block_reason,
+                    "processing_time": processing_time,
+                    "blocked": True,
+                    "verdict": "BLOCK",
+                    "reason": block_reason,
+                    "llm_validated": True
+                }
+            
+            # Step 3: Analyze context
             context = self.context_analyzer.analyze_prompt_context(prompt)
             
-            # Step 2: Create preliminary mapping
+            # Step 4: Create preliminary mapping
             preliminary_map = self._create_preliminary_mapping(prompt, context)
             
-            # Step 3: Enhance with LLM (if available)
+            # Step 5: Enhance with LLM (if available)
             enhanced_map = self.llm_mapper.enhance_mapping(prompt, preliminary_map, context)
             
-            # Step 4: Apply completion rules
+            # Step 6: Apply completion rules
             final_map = self.completion_engine.apply_completion_rules(enhanced_map, context)
             
-            # Step 5: Validate against schema
+            # Step 7: Validate against schema
             validated_map = self.schema.validate_istvon(final_map)
             
-            # Step 6: Log the transformation
+            # Step 8: Log the transformation with broker details
             processing_time = int((time.time() - start_time) * 1000)
+            sanitized_prompt = broker_result.get("sanitized_prompt")
             self.db_manager.log_transformation(
                 prompt, validated_map, True, 
-                context.get('domain', 'auto'), processing_time
+                context.get('domain', 'auto'), processing_time, 
+                verdict, reason, sanitized_prompt
             )
             
             return {
                 "success": True,
                 "istvon": validated_map,
                 "context": context,
-                "processing_time": processing_time
+                "processing_time": processing_time,
+                "verdict": verdict,
+                "reason": reason,
+                "sanitized_prompt": sanitized_prompt
             }
             
         except Exception as e:
@@ -87,7 +118,7 @@ class ISTVONEngine:
             processing_time = int((time.time() - start_time) * 1000)
             self.db_manager.log_transformation(
                 prompt, {}, False, 
-                "error", processing_time
+                "error", processing_time, "ERROR", str(e)
             )
             
             return {
@@ -117,6 +148,27 @@ class ISTVONEngine:
                 mapping["V"] = domain_config['default_variables']
         
         return mapping
+    
+    def generate_response(self, prompt: str) -> str:
+        """Generate response using Gemini API"""
+        try:
+            import google.generativeai as genai
+            from config import Config
+            
+            # Configure Gemini
+            genai.configure(api_key=Config.GEMINI_API_KEY)
+            model = genai.GenerativeModel(Config.DEFAULT_MODEL)
+            
+            # Generate response
+            response = model.generate_content(prompt)
+            
+            if response and response.text:
+                return response.text
+            else:
+                return "No response generated"
+                
+        except Exception as e:
+            return f"Error generating response: {str(e)}"
 
 def setup_environment():
     """Setup environment with error handling"""
@@ -180,6 +232,20 @@ def main():
             st.metric("Avg Prompt Length", f"{analytics.get('avg_prompt_length', 0):.0f} chars")
         except:
             st.info("No analytics data yet")
+        
+        st.header("🔧 Recent Sanitized Prompts")
+        try:
+            sanitized_prompts = engine.db_manager.get_sanitized_prompts(5)
+            if sanitized_prompts:
+                for i, prompt_data in enumerate(sanitized_prompts, 1):
+                    with st.expander(f"Prompt {i} - {prompt_data['verdict']}"):
+                        st.write("**Original:**", prompt_data['original_prompt'][:100] + "...")
+                        st.write("**Sanitized:**", prompt_data['sanitized_prompt'][:100] + "...")
+                        st.write("**Time:**", prompt_data['timestamp'])
+            else:
+                st.info("No sanitized prompts yet")
+        except:
+            st.info("No sanitized prompts data yet")
     
     # Main input area
     st.subheader("📝 Enter Your Prompt")
@@ -215,59 +281,31 @@ def main():
                 result = engine.process_prompt(prompt)
                 
                 if result["success"]:
+                    # Store result in session state to avoid re-processing
+                    st.session_state['istvon_result'] = result
+                    st.session_state['original_prompt'] = prompt
                     st.success("✅ Prompt processed successfully!")
                     
-                    # Display results in tabs
-                    tab1, tab2, tab3 = st.tabs(["🎯 ISTVON JSON", "📊 Context Analysis", "⏱️ Processing Info"])
+                    # Display verdict and reason
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        st.info(f"**Verdict:** {result.get('verdict', 'N/A')}")
+                    with col2:
+                        st.info(f"**Reason:** {result.get('reason', 'N/A')}")
                     
-                    with tab1:
-                        st.subheader("Generated ISTVON JSON")
-                        st.json(result["istvon"])
-                        
-                        # Download button
-                        json_str = json.dumps(result["istvon"], indent=2)
-                        st.download_button(
-                            label="📥 Download JSON",
-                            data=json_str,
-                            file_name=f"istvon_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
-                            mime="application/json"
-                        )
-                    
-                    with tab2:
-                        st.subheader("Context Analysis")
-                        context = result["context"]
-                        
-                        col1, col2, col3 = st.columns(3)
-                        with col1:
-                            st.metric("Domain", context.get('domain', 'general'))
-                        with col2:
-                            st.metric("Complexity", context.get('complexity', 'medium'))
-                        with col3:
-                            st.metric("Specificity", context.get('specificity', 'medium'))
-                        
-                        if context.get('domain_specific_rules'):
-                            st.subheader("Domain Rules Applied")
-                            st.json(context['domain_specific_rules'])
-                    
-                    with tab3:
-                        st.subheader("Processing Information")
-                        st.metric("Processing Time", f"{result['processing_time']} ms")
-                        st.metric("API Status", "✅ Configured" if Config.is_api_configured() else "⚠️ Using fallback")
-                        
-                        # Show recent transformations
-                        st.subheader("Recent Transformations")
-                        try:
-                            recent = engine.db_manager.get_recent_transformations(3)
-                            for item in recent:
-                                status_icon = "✅" if item['success'] else "❌"
-                                st.text(f"{status_icon} {item['prompt']} ({item['timestamp']})")
-                        except:
-                            st.info("No recent transformations")
+                    # Just show success message - detailed results will be shown in session state section below
                 
                 else:
                     if result.get("blocked", False):
                         st.error("🛡️ **Content Blocked for Safety**")
                         st.error(f"❌ {result['error']}")
+                        
+                        # Show verdict and reason
+                        col1, col2 = st.columns(2)
+                        with col1:
+                            st.info(f"**Verdict:** {result.get('verdict', 'N/A')}")
+                        with col2:
+                            st.info(f"**Reason:** {result.get('reason', 'N/A')}")
                         
                         # Show safety recommendations
                         if result.get("recommendations"):
@@ -280,6 +318,106 @@ def main():
                         st.error(f"❌ Processing failed: {result['error']}")
         else:
             st.warning("Please enter a prompt first.")
+    
+    # Display ISTVON result from session state (if exists)
+    if 'istvon_result' in st.session_state:
+        result = st.session_state['istvon_result']
+        
+        st.markdown("---")
+        st.success("✅ ISTVON Framework Generated Successfully!")
+        
+        # Display verdict and reason
+        col1, col2 = st.columns(2)
+        with col1:
+            st.info(f"**Verdict:** {result.get('verdict', 'N/A')}")
+        with col2:
+            st.info(f"**Reason:** {result.get('reason', 'N/A')}")
+        
+        # Display results in tabs
+        tab1, tab2, tab3, tab4 = st.tabs(["🎯 ISTVON JSON", "📊 Context Analysis", "🔧 Generate Response", "⏱️ Processing Info"])
+        
+        with tab1:
+            st.subheader("Generated ISTVON JSON")
+            st.json(result["istvon"])
+            
+            # Download button
+            json_str = json.dumps(result["istvon"], indent=2)
+            st.download_button(
+                label="📥 Download JSON",
+                data=json_str,
+                file_name=f"istvon_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
+                mime="application/json"
+            )
+        
+        with tab2:
+            st.subheader("Context Analysis")
+            context = result["context"]
+            
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.metric("Domain", context.get('domain', 'general'))
+            with col2:
+                st.metric("Complexity", context.get('complexity', 'medium'))
+            with col3:
+                st.metric("Specificity", context.get('specificity', 'medium'))
+            
+            if context.get('domain_specific_rules'):
+                st.subheader("Domain Rules Applied")
+                st.json(context['domain_specific_rules'])
+        
+        with tab3:
+            st.subheader("🚀 Generate Response")
+            
+            # Get instructions from ISTVON "I" section
+            istvon_instructions = result["istvon"].get("I", [])
+            
+            if istvon_instructions:
+                st.write("**Select a prompt from ISTVON Instructions:**")
+                
+                # Create dropdown with ISTVON instructions
+                selected_instruction = st.selectbox(
+                    "Choose an instruction prompt:",
+                    istvon_instructions,
+                    key="instruction_selector"
+                )
+                
+                # Generate response button
+                col1, col2 = st.columns([1, 3])
+                with col1:
+                    generate_response_btn = st.button("🚀 Generate Response", type="primary", key="generate_response_from_istvon")
+                
+                # Generate response if button clicked
+                if generate_response_btn and selected_instruction:
+                    with st.spinner("Generating response..."):
+                        response = engine.generate_response(selected_instruction)
+                        
+                        # Log the response generation
+                        engine.db_manager.log_transformation(
+                            selected_instruction, result["istvon"], True,
+                            result["context"].get('domain', 'auto'), 0,
+                            result.get('verdict', 'ALLOW'), result.get('reason', 'ISTVON instruction'),
+                            selected_instruction, response
+                        )
+                        
+                        st.success("✅ Response generated successfully!")
+                        st.text_area("Generated Response:", value=response, height=200, key="response_output")
+            else:
+                st.warning("No instructions found in ISTVON framework.")
+        
+        with tab4:
+            st.subheader("Processing Information")
+            st.metric("Processing Time", f"{result['processing_time']} ms")
+            st.metric("API Status", "✅ Configured" if Config.is_api_configured() else "⚠️ Using fallback")
+            
+            # Show recent transformations
+            st.subheader("Recent Transformations")
+            try:
+                recent = engine.db_manager.get_recent_transformations(3)
+                for item in recent:
+                    status_icon = "✅" if item['success'] else "❌"
+                    st.text(f"{status_icon} {item['prompt']} ({item['timestamp']})")
+            except:
+                st.info("No recent transformations")
     
     # Footer
     st.markdown("---")

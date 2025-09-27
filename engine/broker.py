@@ -3,6 +3,10 @@ from typing import Dict, Any, List, Tuple
 from enum import Enum
 import re
 import json
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from utils.json_logger import RuleEngineLogger
 from .pattern_matchers import ISTVONPatternMatcher
 from .context_analyzers import ContextAnalyzer
 from .llm_mapper import LLMISTVONMapper
@@ -24,6 +28,7 @@ class ISTVONBroker:
         self.llm_mapper = LLMISTVONMapper()
         self.completion_engine = ISTVONCompletionEngine()
         self.schema_validator = ISTVONSchema()
+        self.json_logger = RuleEngineLogger()
         
         # Unsafe content patterns
         self.unsafe_patterns = {
@@ -32,7 +37,7 @@ class ISTVONBroker:
                 r"(phishing|scam|fraud|steal|stealing)",
                 r"(illegal|unlawful|criminal|terrorist)",
                 r"(violence|harm|kill|murder|suicide)",
-                r"(explosive|bomb|weapon|gun|knife|poison|blow.?up)",
+                r"(explosive|bomb|weapon|gun|knife|poison)",
                 r"(self.?harm|self.?injury|cut.?myself|hurt.?myself)",
                 r"(destroy|damage|break.?into|burglary|theft)"
             ],
@@ -57,12 +62,12 @@ class ISTVONBroker:
         
         # COSTAR gap patterns (missing critical elements)
         self.costar_gaps = {
-            "context": [r"context|background|situation"],
-            "objective": [r"goal|objective|purpose|aim"],
-            "success": [r"success|completion|done|finished"],
-            "timeline": [r"when|time|deadline|schedule"],
-            "audience": [r"for|target|audience|recipient"],
-            "resources": [r"using|with|tools|resources"]
+            "context": [r"context|background|situation|about|regarding"],
+            "objective": [r"goal|objective|purpose|aim|to\s+(write|create|make|build)"],
+            "success": [r"success|completion|done|finished|means|should"],
+            "timeline": [r"when|time|deadline|schedule|by|before"],
+            "audience": [r"for|target|audience|recipient|customers|users|people"],
+            "resources": [r"using|with|tools|resources|via|through"]
         }
     
     def analyze_prompt(self, prompt: str) -> Dict[str, Any]:
@@ -137,9 +142,9 @@ class ISTVONBroker:
         if safety_result["risk_level"] == "high":
             return BrokerDecision.BLOCK
         
-        # Needs fix if medium risk or significant gaps
+        # Needs fix if medium risk or very significant gaps (be more lenient)
         if (safety_result["risk_level"] == "medium" or 
-            costar_gaps["completeness_score"] < 0.5):
+            costar_gaps["completeness_score"] < 0.3):  # Changed from 0.5 to 0.3
             return BrokerDecision.NEEDS_FIX
         
         # Allow if safe and reasonably complete
@@ -187,36 +192,49 @@ class ISTVONBroker:
         analysis = self.analyze_prompt(prompt)
         decision = analysis["decision"]
         
+        # Get decision reason
+        reason = self._get_decision_reason(decision, analysis)
+        
+        # Log to JSON file
+        self.json_logger.log_decision(prompt, decision.value, reason)
+        
+        # Create broker result with JSON logging format
+        broker_result = {
+            "verdict": decision.value,
+            "reason": reason,
+            "prompt": prompt,
+            "analysis": analysis
+        }
+        
         if decision == BrokerDecision.BLOCK:
-            return {
+            broker_result.update({
                 "success": False,
-                "decision": "BLOCK",
-                "reason": "Content blocked due to safety concerns",
-                "analysis": analysis
-            }
+                "decision": "BLOCK"
+            })
+            return broker_result
         
         elif decision == BrokerDecision.NEEDS_FIX:
             # Try to sanitize and enhance
             sanitized_prompt = self._sanitize_prompt(prompt)
             enhanced_prompt = self._enhance_prompt(sanitized_prompt, analysis)
             
-            return {
+            broker_result.update({
                 "success": True,
                 "decision": "NEEDS_FIX",
                 "original_prompt": prompt,
                 "sanitized_prompt": sanitized_prompt,
-                "enhanced_prompt": enhanced_prompt,
-                "analysis": analysis
-            }
+                "enhanced_prompt": enhanced_prompt
+            })
+            return broker_result
         
         else:  # ALLOW
             # Proceed with normal ISTVON processing
-            return {
+            broker_result.update({
                 "success": True,
                 "decision": "ALLOW",
-                "prompt": prompt,
-                "analysis": analysis
-            }
+                "prompt": prompt
+            })
+            return broker_result
     
     def _sanitize_prompt(self, prompt: str) -> str:
         """Sanitize prompt by removing or replacing unsafe content"""
@@ -266,3 +284,25 @@ class ISTVONBroker:
             enhanced += "\n\nAdditional guidance: " + " ".join(enhancements)
         
         return enhanced
+    
+    def _get_decision_reason(self, decision: BrokerDecision, analysis: Dict) -> str:
+        """Get human-readable reason for broker decision"""
+        if decision == BrokerDecision.BLOCK:
+            # Check for specific safety issues
+            safety_issues = analysis["safety_analysis"]["issues"]
+            if safety_issues:
+                for issue in safety_issues:
+                    if issue["severity"] == "high":
+                        return f"Blocked due to: pattern:{issue['category']}"
+            return "Blocked due to: pattern:safety"
+        elif decision == BrokerDecision.NEEDS_FIX:
+            safety_issues = analysis["safety_analysis"]["risk_level"]
+            gaps = analysis["costar_gaps"]["missing_elements"]
+            if safety_issues != "low":
+                return "Content needs sanitization due to safety concerns"
+            elif gaps:
+                return f"Content needs enhancement - missing: {', '.join(gaps)}"
+            else:
+                return "Content needs improvement"
+        else:
+            return None  # Return None for ALLOW to match your format

@@ -1,0 +1,11 @@
+[
+  {
+    "timestamp": "2025-09-28T03:31:38.698856",
+    "prompt": "Test prompt for logging",
+    "verdict": "ALLOW",
+    "reason": "Test reason",
+    "analysis": {
+      "test": "analysis"
+    }
+  }
+]
