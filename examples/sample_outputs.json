@@ -1,0 +1,157 @@
+{
+  "business_email_example": {
+    "prompt": "Write a professional email to clients announcing our new product launch. Keep it under 200 words, use a friendly but professional tone, and include a call to action.",
+    "istvon_output": {
+      "I": [
+        "Write a professional email announcement",
+        "Keep content under 200 words",
+        "Use friendly but professional tone",
+        "Include a clear call to action",
+        "Ensure proper email formatting"
+      ],
+      "S": {
+        "documents": [],
+        "urls": [],
+        "data_points": {
+          "product_name": "New Product",
+          "launch_date": "TBD",
+          "target_audience": "Existing clients"
+        }
+      },
+      "T": [
+        "Professional email templates",
+        "Tone adjustment tools",
+        "Word count validator",
+        "Call-to-action generators"
+      ],
+      "V": {
+        "tone": "friendly but professional",
+        "length": "under 200 words",
+        "format": "email",
+        "audience": "clients"
+      },
+      "O": {
+        "format": "Email content",
+        "delivery": "Email message",
+        "success_criteria": [
+          "Under 200 words",
+          "Professional yet friendly tone",
+          "Clear call to action included",
+          "Proper email structure"
+        ]
+      },
+      "N": {
+        "completion_notice": true,
+        "milestones": [
+          "Email draft completed",
+          "Word count verified",
+          "Tone reviewed",
+          "Call to action added"
+        ]
+      }
+    }
+  },
+  "technical_doc_example": {
+    "prompt": "Create comprehensive API documentation for our new payment processing system. Include authentication methods, endpoint descriptions, error codes, and code examples in Python and JavaScript.",
+    "istvon_output": {
+      "I": [
+        "Create comprehensive API documentation",
+        "Include authentication methods",
+        "Document all endpoints",
+        "Provide error codes and descriptions",
+        "Include Python and JavaScript code examples"
+      ],
+      "S": {
+        "documents": ["API specification", "Authentication requirements"],
+        "urls": [],
+        "data_points": {
+          "system": "Payment processing",
+          "languages": ["Python", "JavaScript"]
+        }
+      },
+      "T": [
+        "API documentation generators",
+        "Code example templates",
+        "Authentication flow diagrams",
+        "Error code reference tools"
+      ],
+      "V": {
+        "tone": "technical",
+        "complexity": "comprehensive",
+        "format": "technical documentation",
+        "audience": "developers"
+      },
+      "O": {
+        "format": "Technical documentation",
+        "delivery": "Structured documentation",
+        "success_criteria": [
+          "All endpoints documented",
+          "Authentication methods explained",
+          "Error codes provided",
+          "Code examples in both languages"
+        ]
+      },
+      "N": {
+        "completion_notice": true,
+        "milestones": [
+          "Authentication section completed",
+          "Endpoints documented",
+          "Error codes added",
+          "Code examples included"
+        ]
+      }
+    }
+  },
+  "creative_content_example": {
+    "prompt": "Write an engaging blog post about the ethical implications of AI in healthcare. Target healthcare professionals, keep it around 800 words, and include real-world examples.",
+    "istvon_output": {
+      "I": [
+        "Write an engaging blog post",
+        "Focus on ethical implications of AI in healthcare",
+        "Target healthcare professionals",
+        "Keep around 800 words",
+        "Include real-world examples"
+      ],
+      "S": {
+        "documents": ["AI ethics research", "Healthcare case studies"],
+        "urls": [],
+        "data_points": {
+          "topic": "AI ethics in healthcare",
+          "target_length": "800 words",
+          "audience": "healthcare professionals"
+        }
+      },
+      "T": [
+        "Blog writing frameworks",
+        "Ethics analysis tools",
+        "Healthcare industry knowledge",
+        "Real-world example databases"
+      ],
+      "V": {
+        "tone": "engaging and informative",
+        "length": "around 800 words",
+        "format": "blog post",
+        "audience": "healthcare professionals"
+      },
+      "O": {
+        "format": "Blog post",
+        "delivery": "Published article",
+        "success_criteria": [
+          "Engaging and readable",
+          "Ethical implications clearly explained",
+          "Real-world examples included",
+          "Appropriate for healthcare professionals"
+        ]
+      },
+      "N": {
+        "completion_notice": true,
+        "milestones": [
+          "Introduction written",
+          "Ethical implications section completed",
+          "Real-world examples added",
+          "Conclusion and call-to-action included"
+        ]
+      }
+    }
+  }
+}

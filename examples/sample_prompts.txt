@@ -1,0 +1,31 @@
+# Sample Prompts for ISTVON Enhancement Engine
+
+## Business Communication
+Write a professional email to clients announcing our new product launch. Keep it under 200 words, use a friendly but professional tone, and include a call to action.
+
+## Technical Documentation
+Create comprehensive API documentation for our new payment processing system. Include authentication methods, endpoint descriptions, error codes, and code examples in Python and JavaScript.
+
+## Creative Content
+Write an engaging blog post about the ethical implications of AI in healthcare. Target healthcare professionals, keep it around 800 words, and include real-world examples.
+
+## Academic Research
+Summarize the key findings from recent climate change research papers. Focus on actionable insights for policymakers, keep it concise but comprehensive.
+
+## Marketing Content
+Develop a social media campaign strategy for a sustainable fashion brand. Include content themes, posting schedule, and engagement tactics for Instagram and LinkedIn.
+
+## Educational Content
+Create a beginner's guide to machine learning concepts. Use simple language, include practical examples, and provide learning resources for further study.
+
+## Project Management
+Write a project proposal for implementing a new customer relationship management system. Include objectives, timeline, budget considerations, and success metrics.
+
+## Technical Support
+Create troubleshooting documentation for common issues with our mobile app. Include step-by-step solutions, screenshots, and escalation procedures.
+
+## Sales Content
+Develop a sales presentation for our new cloud storage solution. Target enterprise clients, highlight security features, and include pricing information.
+
+## User Experience
+Design a user onboarding flow for our e-commerce platform. Focus on reducing friction, improving conversion rates, and providing clear value propositions.
