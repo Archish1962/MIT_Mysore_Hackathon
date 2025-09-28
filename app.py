@@ -169,6 +169,106 @@ class ISTVONEngine:
                 
         except Exception as e:
             return f"Error generating response: {str(e)}"
+    
+    def export_response_to_json(self, response_data: dict, filename: str = None) -> str:
+        """Export response data to JSON file and return the file path"""
+        try:
+            from datetime import datetime
+            import os
+            
+            # Create exports directory if it doesn't exist
+            exports_dir = "exports"
+            if not os.path.exists(exports_dir):
+                os.makedirs(exports_dir)
+            
+            # Generate filename if not provided
+            if not filename:
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                filename = f"response_export_{timestamp}.json"
+            
+            # Ensure filename has .json extension
+            if not filename.endswith('.json'):
+                filename += '.json'
+            
+            filepath = os.path.join(exports_dir, filename)
+            
+            # Write JSON data to file
+            with open(filepath, 'w', encoding='utf-8') as f:
+                json.dump(response_data, f, indent=2, ensure_ascii=False)
+            
+            return filepath
+            
+        except Exception as e:
+            print(f"Error exporting to JSON: {str(e)}")
+            return None
+    
+    def create_complete_response_data(self, original_prompt: str, istvon_data: dict, 
+                                    context: dict, response: str, processing_time: int,
+                                    verdict: str, reason: str, sanitized_prompt: str = None) -> dict:
+        """Create a complete response data structure for JSON export matching Oracle schema"""
+        from datetime import datetime
+        
+        # Get the selected instruction from ISTVON as sanitized_prompt
+        selected_instruction = None
+        if istvon_data and 'I' in istvon_data and istvon_data['I']:
+            selected_instruction = istvon_data['I'][0] if isinstance(istvon_data['I'], list) else str(istvon_data['I'])
+        
+        return {
+            "id": None,  # Will be set by database auto-increment
+            "timestamp": datetime.now().isoformat(),
+            "original_prompt": original_prompt,
+            "verdict": verdict,
+            "reason": reason,
+            "sanitized_prompt": sanitized_prompt or selected_instruction,
+            "final_response": response,
+            "istvon_map_json": istvon_data,
+            "metadata": {
+                "processing_time_ms": processing_time,
+                "export_version": "2.0",
+                "context_analysis": context,
+                "database_logged": True
+            }
+        }
+    
+    def process_and_export_response(self, original_prompt: str, istvon_data: dict, 
+                                  context: dict, response: str, processing_time: int,
+                                  verdict: str, reason: str, sanitized_prompt: str = None) -> dict:
+        """Complete workflow: create response data, export to JSON, and log to database"""
+        try:
+            # Create complete response data
+            complete_response_data = self.create_complete_response_data(
+                original_prompt, istvon_data, context, response, 
+                processing_time, verdict, reason, sanitized_prompt
+            )
+            
+            # Export to JSON file
+            json_filepath = self.export_response_to_json(complete_response_data)
+            
+            # Log to database
+            self.db_manager.log_transformation(
+                original_prompt, istvon_data, True,
+                context.get('domain', 'auto'), processing_time,
+                verdict, reason, sanitized_prompt, response
+            )
+            
+            return {
+                "success": True,
+                "json_filepath": json_filepath,
+                "response_data": complete_response_data,
+                "database_logged": True
+            }
+            
+        except Exception as e:
+            return {
+                "success": False,
+                "error": str(e),
+                "json_filepath": None,
+                "database_logged": False
+            }
+    
+    def import_json_to_database(self, json_filepath: str) -> bool:
+        """Import a JSON file back into the database"""
+        return self.db_manager.import_from_json_file(json_filepath)
 
 def setup_environment():
     """Setup environment with error handling"""
@@ -246,6 +346,56 @@ def main():
                 st.info("No sanitized prompts yet")
         except:
             st.info("No sanitized prompts data yet")
+        
+        st.header("📁 JSON Import/Export")
+        st.write("Import JSON files back into database:")
+        
+        # File uploader for JSON import
+        uploaded_file = st.file_uploader(
+            "Choose a JSON file to import",
+            type=['json'],
+            key="json_importer"
+        )
+        
+        if uploaded_file is not None:
+            try:
+                # Save uploaded file temporarily
+                import tempfile
+                with tempfile.NamedTemporaryFile(delete=False, suffix='.json') as tmp_file:
+                    tmp_file.write(uploaded_file.getvalue())
+                    tmp_filepath = tmp_file.name
+                
+                # Import to database
+                if engine.import_json_to_database(tmp_filepath):
+                    st.success("✅ JSON file imported successfully to database!")
+                else:
+                    st.error("❌ Failed to import JSON file to database")
+                
+                # Clean up temp file
+                import os
+                os.unlink(tmp_filepath)
+                
+            except Exception as e:
+                st.error(f"❌ Error importing file: {str(e)}")
+        
+        # Show recent exports
+        st.write("**Recent Exports:**")
+        try:
+            import os
+            exports_dir = "exports"
+            if os.path.exists(exports_dir):
+                export_files = [f for f in os.listdir(exports_dir) if f.endswith('.json')]
+                if export_files:
+                    # Sort by modification time (newest first)
+                    export_files.sort(key=lambda x: os.path.getmtime(os.path.join(exports_dir, x)), reverse=True)
+                    for i, filename in enumerate(export_files[:3], 1):
+                        st.write(f"{i}. `{filename}`")
+                else:
+                    st.info("No export files yet")
+            else:
+                st.info("No exports directory yet")
+        except:
+            st.info("No export files available")
     
     # Main input area
     st.subheader("📝 Enter Your Prompt")
@@ -391,16 +541,28 @@ def main():
                     with st.spinner("Generating response..."):
                         response = engine.generate_response(selected_instruction)
                         
-                        # Log the response generation
-                        engine.db_manager.log_transformation(
-                            selected_instruction, result["istvon"], True,
-                            result["context"].get('domain', 'auto'), 0,
-                            result.get('verdict', 'ALLOW'), result.get('reason', 'ISTVON instruction'),
-                            selected_instruction, response
+                        # Process and export response (JSON + Database)
+                        export_result = engine.process_and_export_response(
+                            original_prompt=st.session_state.get('original_prompt', ''),
+                            istvon_data=result["istvon"],
+                            context=result["context"],
+                            response=response,
+                            processing_time=result.get('processing_time', 0),
+                            verdict=result.get('verdict', 'ALLOW'),
+                            reason=result.get('reason', 'ISTVON instruction'),
+                            sanitized_prompt=result.get('sanitized_prompt')
                         )
                         
                         st.success("✅ Response generated successfully!")
                         st.text_area("Generated Response:", value=response, height=200, key="response_output")
+                        
+                        # Show export results
+                        if export_result["success"]:
+                            st.success(f"📄 Response exported to JSON: `{export_result['json_filepath']}`")
+                            st.info("💾 Data has been logged to the database")
+                        else:
+                            st.error(f"❌ Export failed: {export_result.get('error', 'Unknown error')}")
+                            st.warning("⚠️ Response was generated but export failed")
             else:
                 st.warning("No instructions found in ISTVON framework.")
         

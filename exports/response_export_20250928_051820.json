@@ -1,0 +1,32 @@
+{
+  "id": null,
+  "timestamp": "2025-09-28T05:18:20.591783",
+  "original_prompt": "Write a professional email about launching our new product",
+  "verdict": "ALLOW",
+  "reason": "Professional business communication",
+  "sanitized_prompt": "Create a professional email for product launch announcement",
+  "final_response": "Subject: Exciting News: Our New Product is Here!\n\nDear Valued Customer,\n\nWe're thrilled to announce the launch of our latest product...",
+  "istvon_map_json": {
+    "I": [
+      "Create a professional email for product launch announcement"
+    ],
+    "O": {
+      "format": "Email",
+      "delivery": "Direct send",
+      "success_criteria": [
+        "Professional tone",
+        "Clear call-to-action"
+      ]
+    }
+  },
+  "metadata": {
+    "processing_time_ms": 1500,
+    "export_version": "2.0",
+    "context_analysis": {
+      "domain": "business",
+      "complexity": "medium",
+      "specificity": "high"
+    },
+    "database_logged": true
+  }
+}

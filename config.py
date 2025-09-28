@@ -58,7 +58,11 @@ class Config:
     }
     
     # Database Configuration
-    DATABASE_NAME = "istvon_logs.db"
+    DATABASE_TYPE = "Oracle"
+    DATABASE_DSN = "localhost:1521/XEPDB1"
+    DATABASE_USERNAME = "heman"
+    DATABASE_PASSWORD = "password"
+    DATABASE_TABLE = "prompt_log"
     
     # UI Configuration
     PAGE_TITLE = "ISTVON Prompt Enhancement Engine"

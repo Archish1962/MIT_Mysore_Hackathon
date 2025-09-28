@@ -1,0 +1,33 @@
+{
+  "metadata": {
+    "timestamp": "2025-09-28T04:52:10.995683",
+    "processing_time_ms": 1500,
+    "verdict": "ALLOW",
+    "reason": "Professional business communication",
+    "export_version": "1.0"
+  },
+  "input": {
+    "original_prompt": "Write a professional email about launching our new product",
+    "sanitized_prompt": "Write a professional email about launching our new product"
+  },
+  "istvon_framework": {
+    "I": [
+      "Create a professional email for product launch"
+    ],
+    "O": {
+      "format": "Email",
+      "delivery": "Direct send",
+      "success_criteria": [
+        "Professional tone",
+        "Clear call-to-action"
+      ]
+    }
+  },
+  "context_analysis": {
+    "domain": "business",
+    "complexity": "medium",
+    "specificity": "high"
+  },
+  "generated_response": "Subject: Exciting News: Our New Product is Here!\n\nDear Valued Customer,\n\nWe're thrilled to announce the launch of our latest product...",
+  "database_logged": true
+}

@@ -1,0 +1,104 @@
+{
+  "id": null,
+  "timestamp": "2025-09-28T05:24:20.435905",
+  "original_prompt": "Help me write a professional resume to apply for a job in meta as a data analyst",
+  "verdict": "NEEDS_FIX",
+  "reason": "Content needs enhancement - missing: context, objective, success, timeline, resources",
+  "sanitized_prompt": "Help me write a professional resume to apply for a job in meta as a data analyst",
+  "final_response": "Okay, here's a standard resume structure with those sections, along with guidance and examples for each:\n\n**1. Header:**\n\n*   **Your Full Name** (Make it prominent)\n*   **Phone Number**\n*   **Email Address** (Professional, like firstname.lastname@gmail.com)\n*   **LinkedIn Profile URL (Optional)** (Only include if it's up-to-date and professional)\n*   **Location (City, State - Optional)** (Avoid full street address for privacy)\n    *   Example:  San Francisco, CA\n\n**2. Summary/Objective (Choose One)**\n\n*   **Summary (Preferred for experienced professionals):**\n    *   *A brief (3-4 sentence) overview of your skills, experience, and career goals, highlighting your most relevant qualifications.*\n    *   *Focus on what you can offer the employer.*\n    *   *Use strong action verbs and quantifiable results.*\n\n    *   *Example:*\n    `Results-oriented marketing professional with 5+ years of experience in developing and executing successful digital marketing campaigns. Proven ability to increase website traffic by 30% and lead generation by 20%. Seeking a challenging role at [Company Name] where I can leverage my expertise to drive growth and brand awareness.`\n\n*   **Objective (Use for entry-level or career changers):**\n    *   *A concise (1-2 sentence) statement of your career goals and how this specific opportunity aligns with your aspirations.*\n    *   *Focus on what you *hope* to achieve, but still tie it to the company.*\n    *   *Example:*\n     `Enthusiastic recent graduate with a strong foundation in data analysis seeking an entry-level position at [Company Name] to apply my analytical skills and contribute to the company's data-driven decision-making process.`\n\n**3. Skills:**\n\n*   *A bulleted list of your key skills, categorized for clarity (if needed).*\n*   *Include both hard skills (technical skills) and soft skills (interpersonal skills).*\n*   *Tailor this section to the specific requirements of the jobs you're applying for.  Review the job description carefully.*\n*   *Use keywords from the job description.*\n*   *Example:*\n\n    *   **Technical Skills:**  Python, SQL, Java, HTML, CSS, JavaScript, Git, Cloud Computing (AWS, Azure), Data Analysis, Machine Learning, Agile Methodologies\n    *   **Soft Skills:**  Communication (written & verbal), Teamwork, Problem-solving, Leadership, Time Management, Critical Thinking, Adaptability, Customer Service\n\n**4. Experience (Reverse Chronological Order - Most Recent First):**\n\n*   *For each position:*\n    *   **Job Title**\n    *   **Company Name**\n    *   **Dates of Employment** (Month Year - Month Year)\n    *   **Location** (City, State)\n    *   **Bullet Points (3-6 per position):**\n        *   *Start each bullet point with a strong action verb (e.g., Managed, Developed, Implemented, Led, Increased, Reduced, Created).*\n        *   *Focus on your accomplishments and quantifiable results whenever possible.*\n        *   *Use the STAR method (Situation, Task, Action, Result) to structure your bullet points.*\n        *   *Tailor your descriptions to the specific requirements of the jobs you're applying for.*\n        *   *Avoid generic statements; be specific and provide context.*\n\n    *   *Example:*\n        **Software Engineer** |  Acme Corporation |  San Francisco, CA | June 2020 - Present\n        *   Developed and maintained RESTful APIs using Python and Flask, resulting in a 20% improvement in application performance.\n        *   Collaborated with a team of 5 engineers to design and implement a new feature for the company's mobile app, which increased user engagement by 15%.\n        *   Participated in code reviews and implemented best practices for software development, contributing to a 10% reduction in bug reports.\n\n**5. Education (Reverse Chronological Order):**\n\n*   *For each degree:*\n    *   **Degree Name**\n    *   **Major**\n    *   **University Name**\n    *   **Graduation Date** (or Expected Graduation Date)\n    *   **GPA (Optional - only include if it's above 3.5)**\n    *   **Relevant Coursework (Optional - for recent graduates or career changers)**\n    *   **Honors/Awards (Optional)**\n\n    *   *Example:*\n        **Bachelor of Science in Computer Science** | University of California, Berkeley | May 2020 | GPA: 3.8\n        *   Relevant Coursework: Data Structures and Algorithms, Database Systems, Machine Learning, Software Engineering\n\n**Optional Sections:**\n\n*   **Projects:**\n    *   *Showcase personal projects, open-source contributions, or academic projects that demonstrate your skills.*\n    *   *Use a similar format to the Experience section, with project titles, dates, and bullet points describing your contributions and accomplishments.*\n*   **Awards & Recognition:**\n    *   *List any awards, scholarships, or other recognition you've received.*\n*   **Certifications:**\n    *   *List any relevant certifications (e.g., Project Management Professional (PMP), AWS Certified Solutions Architect).*\n*   **Volunteer Experience:**\n    *   *Showcase relevant volunteer work or community involvement.*\n*   **Languages:**\n    *   *List any languages you speak fluently, along with your proficiency level.*\n*   **Publications:**\n     *  List any publications you have authored or co-authored.\n*   **Presentations:**\n     * List any presentations you have given.\n\n**Key Considerations & Best Practices:**\n\n*   **Tailor Your Resume:**  The most important thing is to tailor your resume to each specific job you apply for.  Read the job description carefully and highlight the skills and experience that are most relevant.\n*   **Use Keywords:**  Incorporate keywords from the job description throughout your resume, especially in the Skills and Experience sections.  Many companies use Applicant Tracking Systems (ATS) to screen resumes, and these systems often rely on keywords to identify qualified candidates.\n*   **Keep it Concise:**  Aim for a one-page resume if you have less than 10 years of experience.  If you have more than 10 years of experience, a two-page resume is acceptable.\n*   **Use a Professional Font:**  Choose a clean and easy-to-read font such as Arial, Calibri, Times New Roman, or Helvetica.  Use a font size of 10-12 points.\n*   **Use Consistent Formatting:**  Maintain consistent formatting throughout your resume, including font size, spacing, and bullet point style.\n*   **Proofread Carefully:**  Proofread your resume carefully for any typos, grammatical errors, or formatting inconsistencies.  Have someone else review it as well.\n*   **Save as a PDF:**  Save your resume as a PDF file to ensure that the formatting is preserved when you submit it online.\n*   **Action Verbs:**  Use strong action verbs to describe your accomplishments.  Avoid passive voice.  Here are some examples:\n    *   **Management:** Managed, Supervised, Coordinated, Directed, Oversaw, Led\n    *   **Technical:** Developed, Implemented, Designed, Created, Engineered, Programmed\n    *   **Communication:** Communicated, Presented, Wrote, Edited, Facilitated, Trained\n    *   **Problem Solving:** Solved, Resolved, Analyzed, Identified, Diagnosed, Improved\n    *   **Results-Oriented:** Increased, Reduced, Improved, Achieved, Exceeded, Enhanced\n*   **Quantify Your Accomplishments:**  Whenever possible, quantify your accomplishments with numbers and metrics.  For example, instead of saying \"Improved customer satisfaction,\" say \"Improved customer satisfaction by 15%.\"\n\nBy following these guidelines, you can create a compelling resume that highlights your skills and experience and helps you stand out from the competition. Good luck!\n",
+  "istvon_map_json": {
+    "I": [
+      "Structure the resume with standard sections: Summary/Objective, Skills, Experience, Education, and optional sections like Projects or Awards.",
+      "The resume should highlight relevant skills, experience, and achievements applicable to a data analyst role within the technology industry, specifically at Meta.",
+      "Generate a professional resume tailored for a Data Analyst position at Meta.",
+      "Ensure the resume is ATS-friendly and optimized for keyword scanning.",
+      "Execute the requested task: Help me write a professional resume to apply for a job in meta as a data analyst...",
+      "Use a clean and modern resume template suitable for the tech industry.",
+      "Include keywords relevant to data analysis, such as SQL, Python, statistical modeling, data visualization, and A/B testing.",
+      "Prioritize quantifiable achievements and use action verbs to describe responsibilities.",
+      "Tailor the resume content to align with common requirements and expectations of Data Analyst roles at Meta, based on publicly available information (e.g., job descriptions).",
+      "Use professional business language",
+      "Focus on actionable insights and clarity"
+    ],
+    "S": {
+      "documents": [],
+      "urls": [
+        "https://www.metacareers.com/",
+        "Examples of data analyst resumes online",
+        "ATS resume guidelines"
+      ],
+      "data_points": {
+        "Target Company": "Meta",
+        "Target Role": "Data Analyst"
+      }
+    },
+    "T": [
+      "Resume Builder Tools (e.g., Canva, Resume.io, Kickresume)",
+      "Business frameworks",
+      "Meta Data Analyst Job Descriptions",
+      "Microsoft Word/Google Docs",
+      "ATS Optimization Tools (e.g., Jobscan)",
+      "Professional templates",
+      "Industry standards",
+      "Example Data Analyst Resumes",
+      "LinkedIn"
+    ],
+    "V": {
+      "tone": "Professional, Concise, Results-Oriented",
+      "length": "1-2 pages",
+      "complexity": "Medium",
+      "format": "PDF"
+    },
+    "O": {
+      "format": "Text response (resume content and structure suggestion)",
+      "delivery": "Inline display",
+      "success_criteria": [
+        "Resume is well-structured and easy to read.",
+        "Resume follows professional formatting guidelines.",
+        "Professionally formatted",
+        "Resume highlights quantifiable achievements and relevant skills.",
+        "Content is concise, avoiding unnecessary jargon or filler.",
+        "Resume is ATS-friendly and optimized for keyword scanning.",
+        "Resume content is relevant to a Data Analyst role at Meta.",
+        "Actionable recommendations"
+      ]
+    },
+    "N": {
+      "milestones": [
+        "Define resume sections.",
+        "Gather skills and experience information.",
+        "Choose a resume template.",
+        "Write resume content for each section.",
+        "Review and edit for clarity and accuracy.",
+        "Optimize for ATS.",
+        "Finalize and save as PDF."
+      ],
+      "completion_notice": false
+    }
+  },
+  "metadata": {
+    "processing_time_ms": 5839,
+    "export_version": "2.0",
+    "context_analysis": {
+      "domain": "business",
+      "complexity": "medium",
+      "specificity": "medium",
+      "domain_specific_rules": {
+        "default_tools": [
+          "Business frameworks",
+          "Professional templates",
+          "Industry standards"
+        ],
+        "default_outcome": {
+          "format": "Business document",
+          "delivery": "Professional format"
+        },
+        "common_variables": {
+          "tone": "Professional",
+          "length": "Comprehensive"
+        }
+      }
+    },
+    "database_logged": true
+  }
+}
