@@ -328,15 +328,15 @@ Write a professional email to clients announcing our new product launch. Keep it
 # Activate virtual environment
 source venv/bin/activate
 ```
-# Run all tests
+### Run all tests
 ```
 python -m pytest tests/ -v
 ```
-# Run specific test file
+### Run specific test file
 ```
 python -m pytest tests/test_broker.py -v
 ```
-# Run with coverage
+### Run with coverage
 ```
 python -m pytest tests/ --cov=. --cov-report=html
 ```
