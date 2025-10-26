@@ -20,7 +20,7 @@ class Config:
     """Configuration settings for the ISTVON Prompt Enhancement Engine"""
     
     # API Configuration
-    GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', '')
+    GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', False)
     DEFAULT_MODEL = "gemini-2.0-flash"
     
     # ISTVON Schema Definition
@@ -112,3 +112,4 @@ class Config:
         """Check if API is properly configured"""
 
         return cls.GEMINI_API_KEY and cls.GEMINI_API_KEY != 'your-gemini-api-key-here'
+
