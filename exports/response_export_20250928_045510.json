@@ -1,0 +1,73 @@
+{
+  "metadata": {
+    "timestamp": "2025-09-28T04:55:10.734724",
+    "processing_time_ms": 5145,
+    "verdict": "NEEDS_FIX",
+    "reason": "Content needs enhancement - missing: context, objective, success, timeline, audience, resources",
+    "export_version": "1.0"
+  },
+  "input": {
+    "original_prompt": "I want help in solving math problems",
+    "sanitized_prompt": "I want help in solving math problems"
+  },
+  "istvon_framework": {
+    "I": [
+      "Identify the specific mathematical problem and required solution steps.",
+      "Present the solution clearly and concisely, explaining each step.",
+      "Offer alternative solution methods if applicable and within the scope of the request.",
+      "Execute the requested task: I want help in solving math problems...",
+      "Check the solution for accuracy and reasonableness.",
+      "If the math problem is not clearly stated, ask clarifying questions to understand the user's needs, such as 'What type of math problem are you working on? (e.g., algebra, calculus, statistics)', 'Can you provide the specific problem you are trying to solve?', or 'What are you struggling with in solving this problem?'",
+      "Based on the problem type, select the appropriate tool and strategy to solve the problem.",
+      "Analyze the user's request: 'I want help in solving math problems'.",
+      "Solve the problem step-by-step, showing all intermediate calculations.",
+      "Provide a final answer that directly addresses the user's request."
+    ],
+    "S": {
+      "documents": [],
+      "urls": [],
+      "data_points": {}
+    },
+    "T": [
+      "Wolfram Alpha",
+      "Symbolab",
+      "Python (with libraries like NumPy, SciPy, SymPy)",
+      "Calculator (basic or scientific)"
+    ],
+    "V": {
+      "tone": "Helpful, patient, and clear",
+      "length": "Adaptive to problem complexity",
+      "complexity": "Adjustable to user's understanding level",
+      "format": "Text with mathematical notation (e.g., LaTeX)"
+    },
+    "O": {
+      "format": "Text with properly formatted mathematical expressions (LaTeX or similar)",
+      "delivery": "Inline display",
+      "success_criteria": [
+        "The response addresses the user's specific request effectively.",
+        "Each step in the solution process is clearly explained.",
+        "The solution is accurate and complete.",
+        "The user understands the solution and can apply it to similar problems.",
+        "The formatting is clear and easy to read."
+      ]
+    },
+    "N": {
+      "milestones": [
+        "Problem identified and understood",
+        "Appropriate solution strategy selected",
+        "Solution steps executed correctly",
+        "Solution verified for accuracy",
+        "Solution presented clearly and concisely"
+      ],
+      "completion_notice": true
+    }
+  },
+  "context_analysis": {
+    "domain": "general",
+    "complexity": "medium",
+    "specificity": "low",
+    "domain_specific_rules": {}
+  },
+  "generated_response": "Okay, I understand. I will try my best to:\n\n*   **Focus on providing alternative solution methods** if they exist and are relevant to the original request.\n*   **Stay within the boundaries of the request** to avoid going off on tangents or introducing overly complex concepts.\n*   **Clearly explain each alternative method** so you can understand how it works and when it might be useful.\n*   **Highlight the pros and cons** of each method if there are any significant trade-offs.\n\nJust give me a request, and I will do my best to provide helpful alternative solutions. I'm ready when you are.\n",
+  "database_logged": true
+}

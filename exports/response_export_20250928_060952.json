@@ -1,0 +1,98 @@
+{
+  "id": null,
+  "timestamp": "2025-09-28T06:09:52.445762",
+  "original_prompt": "Write a professional email to clients announcing our new product launch. Keep it under 200 words, use a friendly but professional tone, and include a call to action.",
+  "verdict": "NEEDS_FIX",
+  "reason": "Content needs enhancement - missing: context, objective, success, timeline, audience, resources",
+  "sanitized_prompt": "Write a professional email to clients announcing our new product launch. Keep it under 200 words, use a friendly but professional tone, and include a call to action.",
+  "final_response": "Subject: Exciting News! Introducing [Product Name]!\n\nDear [Client Name],\n\nWe're thrilled to announce the launch of our newest product, [Product Name]! Designed with your needs in mind, [Product Name] helps you [briefly explain the product's benefit and key features, e.g., \"streamline your workflow and increase efficiency through its innovative reporting system\"].\n\nWe believe [Product Name] will be a game-changer for [mention target industry/need]. We've worked hard to create a solution that's both powerful and user-friendly.\n\nWe invite you to learn more and explore how [Product Name] can benefit your business. Visit our website at [link to product page] for a detailed overview, features list, and pricing information.\n\nReady to see it in action? Schedule a personalized demo with our team today: [link to demo scheduling].\n\nWe're confident you'll love [Product Name]!\n\nSincerely,\n\nThe [Your Company Name] Team\n",
+  "istvon_map_json": {
+    "I": [
+      "The email should briefly describe the product, highlight its key benefits, and explain how it solves a problem for the client.",
+      "Include a link or instructions on how clients can learn more about the product and make a purchase or sign up.",
+      "Write a professional email to clients announcing the launch of a new product. The email should be under 200 words, use a friendly but professional tone, and include a clear call to action.",
+      "Execute the requested task: Write a professional email to clients announcing our new product launch. Keep it under 200 words, us...",
+      "Use professional business language",
+      "Focus on actionable insights and clarity"
+    ],
+    "S": {
+      "documents": [],
+      "urls": [],
+      "data_points": {
+        "product_name": "Name of the new product",
+        "target_audience": "Description of the target client base",
+        "key_benefits": "List of key benefits of the new product (3-5 items)",
+        "problem_solved": "Description of the problem the product solves for clients",
+        "call_to_action_link": "URL for learning more or purchasing the product",
+        "call_to_action_text": "Text for the call to action (e.g., 'Learn More', 'Sign Up Now')"
+      }
+    },
+    "T": [
+      "CRM Software (e.g., Salesforce, HubSpot)",
+      "Industry standards",
+      "Email Marketing Software (e.g., Mailchimp, Sendinblue)",
+      "Professional Email Templates",
+      "Marketing Automation Platforms",
+      "Professional templates",
+      "Business frameworks"
+    ],
+    "V": {
+      "tone": "Friendly and Professional",
+      "length": "Concise (under 200 words)",
+      "complexity": "Medium",
+      "format": "Email"
+    },
+    "O": {
+      "format": "Text response (email body)",
+      "delivery": "Inline display",
+      "success_criteria": [
+        "Email uses a friendly but professional tone.",
+        "Professionally formatted",
+        "Email accurately describes the product and its benefits.",
+        "Click-through rate (if sent through email marketing platform) is above industry average.",
+        "Email includes a clear call to action.",
+        "Email is grammatically correct and free of errors.",
+        "Email resonates with the target audience.",
+        "Email is under 200 words.",
+        "Actionable recommendations"
+      ]
+    },
+    "N": {
+      "milestones": [
+        "Gather product information (name, benefits, problem solved).",
+        "Identify target audience.",
+        "Draft the email.",
+        "Review and revise the email.",
+        "Finalize the email.",
+        "Send the email (or provide the text).",
+        "Track results (if possible)."
+      ],
+      "completion_notice": true
+    }
+  },
+  "metadata": {
+    "processing_time_ms": 5950,
+    "export_version": "2.0",
+    "context_analysis": {
+      "domain": "business",
+      "complexity": "medium",
+      "specificity": "medium",
+      "domain_specific_rules": {
+        "default_tools": [
+          "Business frameworks",
+          "Professional templates",
+          "Industry standards"
+        ],
+        "default_outcome": {
+          "format": "Business document",
+          "delivery": "Professional format"
+        },
+        "common_variables": {
+          "tone": "Professional",
+          "length": "Comprehensive"
+        }
+      }
+    },
+    "database_logged": true
+  }
+}

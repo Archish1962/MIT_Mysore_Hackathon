@@ -1,0 +1,98 @@
+{
+  "id": null,
+  "timestamp": "2025-09-28T06:12:28.866360",
+  "original_prompt": "Write a professional email to clients announcing our new product launch. Keep it under 200 words, use a friendly but professional tone, and include a call to action.",
+  "verdict": "NEEDS_FIX",
+  "reason": "Content needs enhancement - missing: context, objective, success, timeline, audience, resources",
+  "sanitized_prompt": "Write a professional email to clients announcing our new product launch. Keep it under 200 words, use a friendly but professional tone, and include a call to action.",
+  "final_response": "Okay, here's a template you can adapt, along with a couple of example fills.  Remember to tailor this to the *specific* product and client you have in mind!\n\n**Subject: [Catchy Subject Line Relating to Problem/Benefit]**\n\n**Body:**\n\nHi [Client Name],\n\nI'm reaching out to introduce you to [Product Name], a [brief, impactful description of product - e.g., \"cloud-based project management software,\" \"AI-powered marketing automation tool,\" \"durable and ergonomic office chair\"].\n\nWe understand that [briefly state the problem the client is likely facing - e.g., \"managing multiple projects can be overwhelming,\" \"generating qualified leads is a constant challenge,\" \"your team is experiencing discomfort and fatigue during long work hours\"].\n\n[Product Name] solves this by [explain how the product directly addresses the problem - e.g., \"providing a centralized platform for task assignment, tracking progress, and team communication,\" \"automating lead generation campaigns and scoring qualified prospects,\" \"offering adjustable lumbar support and breathable mesh to promote proper posture and all-day comfort\"].\n\nKey benefits include:\n\n*   [Benefit 1 - Tangible and quantifiable if possible - e.g., \"Increased team productivity by 20%\"]\n*   [Benefit 2 - Relate to the client's goals - e.g., \"Improved collaboration and reduced miscommunication\"]\n*   [Benefit 3 - Competitive advantage or cost savings - e.g., \"Reduced marketing costs by 15%\"]\n\nWould you be open to a brief 15-minute call next week to discuss how [Product Name] can help [Client Company] achieve [Client's specific goal, if you know it]?\n\nBest regards,\n\n[Your Name]\n\n[Your Title]\n\n[Your Company]\n\n[Your Contact Information]\n\n**Example 1: Project Management Software**\n\n**Subject: Streamline Your Project Management & Boost Team Productivity**\n\nHi [Client Name],\n\nI'm reaching out to introduce you to **ProjectZen**, a cloud-based project management software designed to simplify complex workflows.\n\nWe understand that managing multiple projects can be overwhelming, leading to missed deadlines and communication breakdowns.\n\nProjectZen solves this by providing a centralized platform for task assignment, tracking progress, and team communication, ensuring everyone is on the same page.\n\nKey benefits include:\n\n*   Increased team productivity by 20%\n*   Improved collaboration and reduced miscommunication\n*   Real-time project dashboards for clear visibility and control\n\nWould you be open to a brief 15-minute call next week to discuss how ProjectZen can help [Client Company] achieve better project outcomes?\n\nBest regards,\n\n[Your Name]\n\n[Your Title]\n\n[Your Company]\n\n[Your Contact Information]\n\n**Example 2: Ergonomic Office Chair**\n\n**Subject: Enhance Team Comfort and Productivity with [Chair Name]**\n\nHi [Client Name],\n\nI'm reaching out to introduce you to the **ErgoMax Pro**, a durable and ergonomic office chair engineered for optimal comfort and support.\n\nWe understand that your team may experience discomfort and fatigue during long work hours, impacting their productivity and well-being.\n\nErgoMax Pro solves this by offering adjustable lumbar support and breathable mesh to promote proper posture and all-day comfort, reducing strain and enhancing focus.\n\nKey benefits include:\n\n*   Reduced employee absenteeism due to back pain and discomfort.\n*   Improved employee morale and engagement.\n*   Increased productivity through enhanced comfort and focus.\n\nWould you be open to a brief 15-minute call next week to discuss how ErgoMax Pro can help [Client Company] invest in your team's well-being?\n\nBest regards,\n\n[Your Name]\n\n[Your Title]\n\n[Your Company]\n\n[Your Contact Information]\n\n**Key Takeaways for Customization:**\n\n*   **Research the Client:** Understand their industry, challenges, and goals.\n*   **Specific Problem:** Don't be vague. The more specific the problem you address, the better.\n*   **Tangible Benefits:** Use numbers and data whenever possible.\n*   **Clear Call to Action:** Make it easy for them to take the next step.  A short call is often a good way to start.\n*   **Personalization:**  If possible, personalize the email with information specific to the client, like their name, company, and industry.  Avoid generic greetings.\n*   **Keep it Concise:** Respect the recipient's time.  Get to the point quickly.\n*   **Test and Iterate:** Track your results and refine your email based on what works best.\n",
+  "istvon_map_json": {
+    "I": [
+      "The email should briefly describe the product, highlight its key benefits, and explain how it solves a problem for the client.",
+      "Include a link or instructions on how clients can learn more about the product and make a purchase or sign up.",
+      "Write a professional email to clients announcing the launch of a new product. The email should be under 200 words, use a friendly but professional tone, and include a clear call to action.",
+      "Execute the requested task: Write a professional email to clients announcing our new product launch. Keep it under 200 words, us...",
+      "Use professional business language",
+      "Focus on actionable insights and clarity"
+    ],
+    "S": {
+      "documents": [],
+      "urls": [],
+      "data_points": {
+        "product_name": "Name of the new product",
+        "target_audience": "Description of the target client base",
+        "key_benefits": "List of key benefits of the new product (3-5 items)",
+        "problem_solved": "Description of the problem the product solves for clients",
+        "call_to_action_link": "URL for learning more or purchasing the product",
+        "call_to_action_text": "Text for the call to action (e.g., 'Learn More', 'Sign Up Now')"
+      }
+    },
+    "T": [
+      "CRM Software (e.g., Salesforce, HubSpot)",
+      "Industry standards",
+      "Email Marketing Software (e.g., Mailchimp, Sendinblue)",
+      "Professional Email Templates",
+      "Marketing Automation Platforms",
+      "Professional templates",
+      "Business frameworks"
+    ],
+    "V": {
+      "tone": "Friendly and Professional",
+      "length": "Concise (under 200 words)",
+      "complexity": "Medium",
+      "format": "Email"
+    },
+    "O": {
+      "format": "Text response (email body)",
+      "delivery": "Inline display",
+      "success_criteria": [
+        "Email uses a friendly but professional tone.",
+        "Professionally formatted",
+        "Email accurately describes the product and its benefits.",
+        "Click-through rate (if sent through email marketing platform) is above industry average.",
+        "Email includes a clear call to action.",
+        "Email is grammatically correct and free of errors.",
+        "Email resonates with the target audience.",
+        "Email is under 200 words.",
+        "Actionable recommendations"
+      ]
+    },
+    "N": {
+      "milestones": [
+        "Gather product information (name, benefits, problem solved).",
+        "Identify target audience.",
+        "Draft the email.",
+        "Review and revise the email.",
+        "Finalize the email.",
+        "Send the email (or provide the text).",
+        "Track results (if possible)."
+      ],
+      "completion_notice": true
+    }
+  },
+  "metadata": {
+    "processing_time_ms": 5950,
+    "export_version": "2.0",
+    "context_analysis": {
+      "domain": "business",
+      "complexity": "medium",
+      "specificity": "medium",
+      "domain_specific_rules": {
+        "default_tools": [
+          "Business frameworks",
+          "Professional templates",
+          "Industry standards"
+        ],
+        "default_outcome": {
+          "format": "Business document",
+          "delivery": "Professional format"
+        },
+        "common_variables": {
+          "tone": "Professional",
+          "length": "Comprehensive"
+        }
+      }
+    },
+    "database_logged": true
+  }
+}

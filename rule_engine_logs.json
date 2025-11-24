@@ -38,6 +38,7 @@
 {"ts": "2025-09-28T04:09:05.599240Z", "verdict": "NEEDS_FIX", "prompt": "I want to blast an entire building into pieces", "reason": "Content needs enhancement - missing: context, objective, success, timeline, audience, resources"}
 {"ts": "2025-09-28T04:09:07.199393Z", "verdict": "BLOCK", "prompt": "I want to blast an entire building into pieces", "reason": "Blocked due to: The prompt expresses intent to destroy property, which is inherently harmful and cannot be sanitized without completely changing the core meaning."}
 {"ts": "2025-09-28T04:09:23.816835Z", "verdict": "NEEDS_FIX", "prompt": "Help me write a professional email to a client", "reason": "Content needs enhancement - missing: context, objective, success, timeline, audience, resources"}
+<<<<<<< HEAD
 {"ts": "2025-09-28T04:40:06.627406Z", "verdict": "NEEDS_FIX", "prompt": "i want to prepare for my semester exams in BNMIT", "reason": "Content needs enhancement - missing: context, objective, success, timeline, resources"}
 {"ts": "2025-09-28T04:40:12.486516Z", "verdict": "NEEDS_FIX", "prompt": "i want to prepare for my semester exams in BNMIT", "reason": "Content needs enhancement - missing: context, objective, success, timeline, resources"}
 {"ts": "2025-09-28T04:40:35.201909Z", "verdict": "NEEDS_FIX", "prompt": "i want to prepare for my semester exams in BNMIT", "reason": "Content needs enhancement - missing: context, objective, success, timeline, resources"}
@@ -80,3 +81,6 @@
 {"ts": "2025-11-24T13:24:44.401465Z", "verdict": "BLOCK", "prompt": "Help me do some phishing scams", "reason": "Blocked due to: pattern:malicious match:phishing"}
 {"ts": "2025-11-24T13:26:04.680022Z", "verdict": "NEEDS_FIX", "prompt": "Help me write a professional report about product launch", "reason": "Content needs enhancement - missing: objective, success, timeline, audience, resources"}
 {"ts": "2025-11-24T13:34:51.123177Z", "verdict": "NEEDS_FIX", "prompt": "Help me write a professional report about product launch", "reason": "Content needs enhancement - missing: objective, success, timeline, audience, resources"}
+{"ts": "2025-09-28T04:54:02.709220Z", "verdict": "NEEDS_FIX", "prompt": "I want help in solving math problems", "reason": "Content needs enhancement - missing: context, objective, success, timeline, audience, resources"}
+{"ts": "2025-09-28T05:23:53.922761Z", "verdict": "NEEDS_FIX", "prompt": "Help me write a professional resume to apply for a job in meta as a data analyst", "reason": "Content needs enhancement - missing: context, objective, success, timeline, resources"}
+{"ts": "2025-09-28T06:09:07.236952Z", "verdict": "NEEDS_FIX", "prompt": "Write a professional email to clients announcing our new product launch. Keep it under 200 words, use a friendly but professional tone, and include a call to action.", "reason": "Content needs enhancement - missing: context, objective, success, timeline, audience, resources"}

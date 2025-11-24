@@ -20,7 +20,7 @@ class Config:
     """Configuration settings for the ISTVON Prompt Enhancement Engine"""
     
     # API Configuration
-    GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', 'AIzaSyCebaAOXEowAnJfZ5urzIsyx5FmBrrYvMo')
+    GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', False)
     DEFAULT_MODEL = "gemini-2.0-flash"
     
     # ISTVON Schema Definition
@@ -58,7 +58,11 @@ class Config:
     }
     
     # Database Configuration
-    DATABASE_NAME = "istvon_logs.db"
+    DATABASE_TYPE = "Oracle"
+    DATABASE_DSN = "localhost:1521/XEPDB1"
+    DATABASE_USERNAME = "heman"
+    DATABASE_PASSWORD = "password"
+    DATABASE_TABLE = "prompt_log"
     
     # UI Configuration
     PAGE_TITLE = "ISTVON Prompt Enhancement Engine"
@@ -106,4 +110,6 @@ class Config:
     @classmethod
     def is_api_configured(cls) -> bool:
         """Check if API is properly configured"""
+
         return cls.GEMINI_API_KEY and cls.GEMINI_API_KEY != 'your-gemini-api-key-here'
+
