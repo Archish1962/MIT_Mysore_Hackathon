@@ -340,7 +340,16 @@ Write a professional email to clients announcing our new product launch. Keep it
       "Professional yet friendly tone",
       "Clear call to action included"
     ]
-  }
+  },
+  "N": {
+        "completion_notice": true,
+        "milestones": [
+          "Email draft completed",
+          "Word count verified",
+          "Tone reviewed",
+          "Call to action added"
+        ]
+      }
 }
 ```
 ## Testing
