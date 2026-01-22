@@ -22,9 +22,9 @@ Successfully migrated the ISTVON Prompt Enhancement Engine from SQLite to Oracle
   ```
 
 ### 2. Connection Configuration
-- **DSN**: `localhost:1521/XEPDB1`
-- **Username**: `heman`
-- **Password**: `password`
+- **DSN**: `<db_host:port/service>`
+- **Username**: ``
+- **Password**: ``
 - **Connection management** with proper error handling and CLOB data handling
 
 ### 3. JSON Export Structure (Updated)
