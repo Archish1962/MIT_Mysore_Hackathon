@@ -58,10 +58,10 @@ class Config:
     }
     
     # Database Configuration
-    DATABASE_TYPE = "Oracle"
-    DATABASE_DSN = "localhost:1521/XEPDB1"
-    DATABASE_USERNAME = "heman"
-    DATABASE_PASSWORD = "password"
+    DATABASE_TYPE = "database_type"
+    DATABASE_DSN = "<db_host:port/service>"
+    DATABASE_USERNAME = ""
+    DATABASE_PASSWORD = ""
     DATABASE_TABLE = "prompt_log"
     
     # UI Configuration
@@ -112,4 +112,5 @@ class Config:
         """Check if API is properly configured"""
 
         return cls.GEMINI_API_KEY and cls.GEMINI_API_KEY != 'your-gemini-api-key-here'
+
 
