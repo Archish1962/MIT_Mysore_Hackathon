@@ -169,7 +169,7 @@ ORACLE_PASSWORD=""
 1. Ensure Oracle database is running
 2. Verify connection:
    ```bash
-   sqlplus heman/password@"<db_host:port/service>"
+   sqlplus <username>/<password>@<host>:<port>/<service_name>
    ```
 
 ### Configuration File
