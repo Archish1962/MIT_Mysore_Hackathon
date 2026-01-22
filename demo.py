@@ -1,9 +1,9 @@
 import oracledb
 
 # Connection details
-dsn = "192.168.0.127:1521/XEPDB1"   # Change to your Oracle DB DSN
-username = "heman"                  # Your username
-password = "password"               # Your password
+dsn = "host_ip/service"   # Change to your Oracle DB DSN
+username = ""                  # Your username
+password = ""               # Your password
 
 # Establish connection
 conn = oracledb.connect(user=username, password=password, dsn=dsn)
