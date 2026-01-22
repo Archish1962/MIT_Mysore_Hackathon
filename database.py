@@ -9,9 +9,9 @@ class DatabaseManager:
     
     def __init__(self):
         # Oracle connection parameters
-        self.dsn = "localhost:1521/XEPDB1"
-        self.username = "heman"
-        self.password = "password"
+        self.dsn = "<db_host:port/service>"
+        self.username = ""
+        self.password = ""
         self.connection = None
         self.setup_database()
     
@@ -294,4 +294,5 @@ class DatabaseManager:
             print(f"Error getting response by timestamp: {e}")
             return None
         finally:
+
             cursor.close()
