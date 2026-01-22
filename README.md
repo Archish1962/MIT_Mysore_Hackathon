@@ -2,6 +2,11 @@
 
 A sophisticated AI-powered system that transforms natural language prompts into structured ISTVON (Instructions, Sources, Tools, Variables, Outcome, Notifications) JSON frameworks, with Oracle database integration and comprehensive response generation capabilities.
 
+
+https://github.com/user-attachments/assets/f8d2fb82-b5d2-4666-9bb8-d4e2ae16aa72
+
+
+
 ##  Table of Contents
 
 - [Overview](#overview)
