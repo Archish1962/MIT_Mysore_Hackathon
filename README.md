@@ -15,7 +15,6 @@ A sophisticated AI-powered system that transforms natural language prompts into 
 - [Database Schema](#database-schema)
 - [Examples](#examples)
 - [Testing](#testing)
-- [License](#license)
 
 ##  Overview
 
@@ -151,9 +150,9 @@ Create a `.env` file in the project root:
 GEMINI_API_KEY=your-gemini-api-key-here
 
 # Oracle Database Configuration
-ORACLE_DSN=localhost:1521/XEPDB1
-ORACLE_USERNAME=heman
-ORACLE_PASSWORD=password
+ORACLE_DSN="<db_host:port/service>"
+ORACLE_USERNAME=""
+ORACLE_PASSWORD=""
 ```
 
 ### API Key Setup
@@ -170,7 +169,7 @@ ORACLE_PASSWORD=password
 1. Ensure Oracle database is running
 2. Verify connection:
    ```bash
-   sqlplus heman/password@localhost:1521/XEPDB1
+   sqlplus heman/password@"<db_host:port/service>"
    ```
 
 ### Configuration File
@@ -184,8 +183,8 @@ class Config:
     DEFAULT_MODEL = "gemini-2.0-flash"
     
     # Database Configuration
-    DATABASE_TYPE = "Oracle"
-    DATABASE_DSN = "localhost:1521/XEPDB1"
+    DATABASE_TYPE = "database_type"
+    DATABASE_DSN = "<db_host:port/service>"
     
     # Processing Configuration
     MAX_PROMPT_LENGTH = 5000
