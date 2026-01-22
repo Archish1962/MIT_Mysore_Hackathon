@@ -248,6 +248,30 @@ Generates AI response using Gemini API.
 **Returns:**
 - `str`: Generated response text
 
+**Rule Engine output logs**
+```json
+[
+  {
+    "timestamp": "2025-09-28T04:09:07.199393Z",
+    "verdict": "BLOCK",
+    "prompt": "I want to blast an entire building into pieces",
+    "reason": "Expression of intent to destroy property; inherently harmful and cannot be sanitized."
+  },
+  {
+    "timestamp": "2025-09-28T04:41:16.708244Z",
+    "verdict": "NEEDS_FIX",
+    "prompt": "i want to prepare for physics exam",
+    "reason": "Missing context, objective, success criteria, timeline, and resources."
+  },
+  {
+    "timestamp": "2025-09-28T03:36:56.466266Z",
+    "verdict": "ALLOW",
+    "prompt": "Write a professional email to our customers about launching our new product. The email should be sent to our customer base, explain the key features and benefits, and include a call-to-action to    visit our website. Success means customers understand the product and visit our website.",
+    "reason": null
+  }
+]
+```
+
 ### DatabaseManager Class
 
 #### `log_transformation(...) -> bool`
