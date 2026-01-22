@@ -108,7 +108,7 @@ chmod +x launch.sh
 #### Step 1: Clone the Repository
 ```bash
 git clone <repository-url>
-cd MIT_Mysore_Hackathon
+cd ISTVON_Prompt_Enhancement_Engine
 ```
 
 #### Step 2: Create Virtual Environment
