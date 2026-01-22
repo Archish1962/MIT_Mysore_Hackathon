@@ -126,7 +126,7 @@ The application will automatically:
 
 ### Test Oracle Connection
 ```sql
-sqlplus heman/password@localhost:1521/XEPDB1
+sqlplus heman/password@"<db_host:port/service>"
 ```
 
 ### Check Table Structure
