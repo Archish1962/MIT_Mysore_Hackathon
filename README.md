@@ -27,6 +27,53 @@ ISTVON is a structured framework for organizing AI prompts into six key componen
 
 ---
 
+## How It Works
+
+```
+┌────────────────┐
+│  User Prompt   │
+└───────┬────────┘
+        │
+        ▼
+┌────────────────┐     ┌─────────────┐
+│  Safety Broker │────►│   BLOCK     │ (Dangerous content)
+└───────┬────────┘     └─────────────┘
+        │
+        ▼
+┌────────────────┐     ┌─────────────┐
+│ COSTAR Analysis│────►│  NEEDS_FIX  │ (Missing elements / risky)
+└───────┬────────┘     └─────────────┘
+        │                     │
+        │                     ▼
+        │              ┌─────────────┐
+        │              │  Sanitize   │
+        │              │  + Enhance  │
+        │              └──────┬──────┘
+        │                     │
+        ▼                     ▼
+┌────────────────┐     ┌─────────────┐
+│ Context Detect │     │   ALLOW     │
+└───────┬────────┘     └─────────────┘
+        │
+        ▼
+┌────────────────┐
+│ ISTVON Mapping │
+│ (Rules + LLM)  │
+└───────┬────────┘
+        │
+        ▼
+┌────────────────┐
+│ Schema Validate│
+└───────┬────────┘
+        │
+        ▼
+┌────────────────┐
+│  ISTVON JSON   │
+└────────────────┘
+```
+
+---
+
 ## Key Features
 
 ### Safety Broker System
@@ -110,53 +157,6 @@ streamlit run app.py
 ```
 
 Open http://localhost:8501 in your browser.
-
----
-
-## How It Works
-
-```
-┌────────────────┐
-│  User Prompt   │
-└───────┬────────┘
-        │
-        ▼
-┌────────────────┐     ┌─────────────┐
-│  Safety Broker │────►│   BLOCK     │ (Dangerous content)
-└───────┬────────┘     └─────────────┘
-        │
-        ▼
-┌────────────────┐     ┌─────────────┐
-│ COSTAR Analysis│────►│  NEEDS_FIX  │ (Missing elements / risky)
-└───────┬────────┘     └─────────────┘
-        │                     │
-        │                     ▼
-        │              ┌─────────────┐
-        │              │  Sanitize   │
-        │              │  + Enhance  │
-        │              └──────┬──────┘
-        │                     │
-        ▼                     ▼
-┌────────────────┐     ┌─────────────┐
-│ Context Detect │     │   ALLOW     │
-└───────┬────────┘     └─────────────┘
-        │
-        ▼
-┌────────────────┐
-│ ISTVON Mapping │
-│ (Rules + LLM)  │
-└───────┬────────┘
-        │
-        ▼
-┌────────────────┐
-│ Schema Validate│
-└───────┬────────┘
-        │
-        ▼
-┌────────────────┐
-│  ISTVON JSON   │
-└────────────────┘
-```
 
 ---
 
